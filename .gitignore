@@ -1,0 +1,9 @@
+# local env files
+.env
+.env.local
+.env.*.local
+# currently don't want to checkin PNG files
+*.png
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
