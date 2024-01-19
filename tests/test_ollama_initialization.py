@@ -1,15 +1,10 @@
 import pytest
 import ai_agent 
+from ai_agent import LlamaBrain
 from langchain_community.llms import Ollama
 
-
-def test_llama2_initialization():
-    llm2 = ai_agent.initialize_llama2()
-    # llm2("Tell me a short joke about star trek")
-    assert isinstance(llm2,Ollama)
-
-
-def test_wizardmath_initialization():
-    mathwiz = ai_agent.initialize_mathwiz()
-    # mathwiz("How many 4-digit numbers have the last digit equal to the sum of the first two digits?")
-    assert isinstance(mathwiz,Ollama)
+def test_LLama_Brain():
+    brain = LlamaBrain()
+    assert isinstance(brain,LlamaBrain)
+    response = brain.think("I am testing that you are working - if you are working, please respond with a single YES")
+    assert response == "YES"
