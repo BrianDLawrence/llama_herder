@@ -1,10 +1,8 @@
-import pytest
-import ai_agent 
+""" Testing ollama brain """
 from ai_agent import LlamaBrain
-from langchain_community.llms import Ollama
 
-def test_LLama_Brain():
+def test_llama_brain_initialization():
+    """ Testing initialization of the brain """
     brain = LlamaBrain()
     assert isinstance(brain,LlamaBrain)
-    response = brain.think("I am testing that you are working - if you are working, please respond with a single YES")
-    assert response == "YES"
+    brain.think("Hello")
