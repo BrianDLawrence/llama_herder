@@ -1,6 +1,7 @@
 """ LLAMA BRAIN """
 from config import LEFTBRAIN,RIGHTBRAIN,THALAMUS
 from .model_initializer import initialize_ollama
+from .utils.error_handling import error_handler
 
 class LlamaBrain:
     """ Basically a smarter chatbot that consists of three LLMS """
@@ -17,9 +18,10 @@ class LlamaBrain:
 
         # Create input for the model by concatenating the history
         model_input = " ".join(self.history)
-
+        
         # Generate the response -- currently right brain thinking only, just wait.. work in progress
-        response = self.right.invoke(model_input)
+        with error_handler("invoke ollama model"):
+            response = self.right.invoke(model_input)
 
         # Append the response to history
         self.history.append(response)
