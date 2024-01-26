@@ -12,6 +12,14 @@ class LlamaBrain:
         self.history = []
 
     def think(self, user_input):
+        """ Invoke the right more creative, intuitive brain  """
+        return self.invoke(user_input, self.right)
+    
+    def compute(self, user_input):
+        """ Invoke the left more logicical analytic brain """
+        return self.invoke(user_input, self.left)
+
+    def invoke(self, user_input, brain):
         """ Invoke the brain, make it think """
         # Append the user input to history
         self.history.append(user_input)
@@ -19,9 +27,9 @@ class LlamaBrain:
         # Create input for the model by concatenating the history
         model_input = " ".join(self.history)
         
-        # Generate the response -- currently right brain thinking only, just wait.. work in progress
+        # compute uses the left brain
         with error_handler("invoke ollama model"):
-            response = self.right.invoke(model_input)
+            response = brain.invoke(model_input)
 
         # Append the response to history
         self.history.append(response)
