@@ -1,2 +1,2 @@
-""" AI AGENT Llama Herder """
-from .llama_brain import LlamaBrain
+""" Llama Ai Agents """
+from .llama_agent import LlamaAgent

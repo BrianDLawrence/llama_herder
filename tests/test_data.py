@@ -1,7 +1,10 @@
 """Test Data"""
+from langchain.prompts import PromptTemplate
 
-""" We will santize the data from the appropriate apis into a string format and send that format into LLMs"""
-MOCKCALENDARDATA1 = """ 
+#We will santize the data from the appropriate apis
+#into a string format and send that format into LLMs
+
+MOCKCALENDARDATA1 = """
     EVENT: DAILY SCRUM
     DATE: JAN 10, 2024
     TIME: 9:00 AM to 9:30 AM (CET)
@@ -31,7 +34,7 @@ MOCKCALENDARDATA1 = """
     ATTENDEES: Brian Lawrence (Brian@SperoAutem.com), Client Rep
 """
 
-MOCKCALENDARDATA2 = """ 
+MOCKCALENDARDATA2 = """
     EVENT: DAILY SCRUM
     DATE: JAN 11, 2024
     TIME: 9:00 AM to 9:30 AM (CET)
@@ -106,3 +109,19 @@ MOCKTODOLIST2 = """
     PROJECT: FUN
     DUE DATE: JAN 11, 2024
 """
+
+MOCKGOAL1 = """
+    GOAL: I want an optimized schedule that includes Meetings and TODOs. 
+    Each item should be either a TODO or meeting. 
+    It is important to understand that any meetings you get, can not be changed 
+    I want the TODOs to be appropriately placed. Each TODO should be analyzed
+    to determine when it should be complete based on priority P1 being the highest with P2,3 .etc being lower
+    Also look at the description and determine based on the description if the TODO should be done before 
+    a meeting based on the context. 
+    The schedule should be in the following format exactly:
+    [ITEM1 NAME, DATE, START TIME, END TIME, DESCRIPTION], [ITEM2 NAME...]
+"""
+
+TESTPROMPT = PromptTemplate(
+        input_variables=["topic"],
+        template ="You are happy chatbot : {topic} ")

@@ -1,7 +1,9 @@
 """ Testing ollama brain """
-from ai_agent import LlamaBrain
+from config import GENERAL
+from ai_agent import LlamaAgent
+from .test_data import TESTPROMPT
 
 def test_llama_brain_initialization():
-    """ Testing initialization of the brain """
-    brain = LlamaBrain()
-    assert isinstance(brain,LlamaBrain)
+    """ Testing initialization is working """
+    ollama = LlamaAgent(GENERAL,TESTPROMPT)
+    assert isinstance(ollama,LlamaAgent)
