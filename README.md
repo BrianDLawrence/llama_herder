@@ -1,15 +1,16 @@
 # LLAMA HERDER
 
-This is an AI Agent that utilizes multiple ollama models - initially 
-llame2 and wizard-math (SOON!) 
-Currently started development as of 1/12/2024
-I have a high level architecture in mind but working through the details stil.. 
+AI Agent Controller<br> 
+Using [Langchain](https://www.langchain.com/) with local LLMs from [ollama.ai](https://ollama.ai/)<br>
+
+## High Level Architecture Diagram
+![Llama Design](LlamaHerder.png)
 
 ## EXAMPLES
 
 ## API
 
-### SOON - IN PROGRESS 
+### IN PROGRESS 
 
 ## License
 
