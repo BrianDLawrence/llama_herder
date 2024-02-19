@@ -1,9 +1,9 @@
-import os
-from dotenv import load_dotenv
-from langchain.prompts import PromptTemplate
 """ 
 Common Configuration needed for our project
 """
+import os
+from dotenv import load_dotenv
+from langchain.prompts import PromptTemplate
 load_dotenv()
 
 #Ollama Model for our Llama Agents
@@ -19,5 +19,5 @@ GENERALPROMPT = PromptTemplate(
         input_variables=["topic"],
         template ="You are happy chatbot : {topic} ")
 
-#CLOUD URL 
+#CLOUD URL
 CLOUDAMQP_URL = os.getenv('CLOUDAMQP_URL','no_CLOUDAMQP_Variable')

@@ -1,5 +1,4 @@
 """ LLAMA AGENT """
-from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from .model_initializer import initialize_ollama
 from .utils.error_handling import error_handler
