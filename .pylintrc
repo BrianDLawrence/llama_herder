@@ -1,2 +1,3 @@
 [MESSAGES CONTROL]
 disable=missing-class-docstring,missing-function-docstring,missing-module-docstring,import-error
+max-line-length=120
