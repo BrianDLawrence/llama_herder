@@ -1,10 +1,12 @@
-""" Testing ollama agent can be invoked """
+""" Testing ollama agent can be invoked 
+    For this test to run, it requires
+    a local Ollama LLM service 
+"""
 from config import GENERAL
-from .test_data import TESTPROMPT
 from ai_agent import LlamaAgent
+from .test_data import TESTPROMPT
 
 def test_llama_is_able_to_be_invoked():
-    """ see how the scheduler works """
     ollama = LlamaAgent(GENERAL,TESTPROMPT)
     prompt = """This is a pytest, I am checking to see if you are running.
     If you are running, please respond with a single 'I AM WORKING' and nothing else"""
@@ -12,7 +14,6 @@ def test_llama_is_able_to_be_invoked():
     assert "I AM WORKING" in response
 
 def test_llama_remembers_our_chats():
-    """ Check to see if the agent remembers the conversation """
     dogsname = "Chuck"
     ollama = LlamaAgent(GENERAL,TESTPROMPT)
     prompt = """This is a pytest, I am checking to see if you are running and working correctly.

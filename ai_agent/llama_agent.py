@@ -1,11 +1,9 @@
-""" LLAMA AGENT """
 from langchain.chains import LLMChain
 from .model_initializer import initialize_ollama
 from .utils.error_handling import error_handler
-
+# pylint: disable=too-few-public-methods
 
 class LlamaAgent:
-    """ Basic agent that remembers """
 
     def __init__(self, model, prompt):
         self.ollama = initialize_ollama(model)
@@ -13,22 +11,18 @@ class LlamaAgent:
         self.history = []
 
     def request(self, user_input):
-        """ Invoke the right more creative, intuitive brain  """
-        return self.__invoke(user_input, self.chain)
+        return self.__handle_history_and_make_request(user_input)
 
-    def __invoke(self, user_input, model):
-        """ Invoke the model, make it think """
-        # Append the user input to history
-        self.history.append(user_input)
-
-        # Create input for the model by concatenating the history
-        model_input = " ".join(self.history)
-
-        # compute uses the left brain
+    def __handle_history_and_make_request(self, user_input):
+        model_input = self.__add_input_to_history(user_input)
         with error_handler("invoke ollama model"):
-            response = model.invoke(model_input)["text"]
-
-        # Append the response to history
-        self.history.append(response)
-
+            response = self.chain.invoke(model_input)["text"]
+        self._add_response_to_history(response)
         return response
+
+    def __add_input_to_history(self, user_input):
+        self.history.append(user_input)
+        return " ".join(self.history)
+
+    def _add_response_to_history(self, response):
+        self.history.append(response)

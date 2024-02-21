@@ -1,9 +1,6 @@
 """Test Data"""
 from langchain.prompts import PromptTemplate
 
-#We will santize the data from the appropriate apis
-#into a string format and send that format into LLMs
-
 MOCKCALENDARDATA1 = """
     EVENT: DAILY SCRUM
     DATE: JAN 10, 2024
