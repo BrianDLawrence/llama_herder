@@ -36,3 +36,16 @@ def test_request_with_mocked_dependencies(mock_llm_chain):
     assert response == expected_response
     mock_llm_chain_instance.invoke.assert_called_once_with(f"{user_input}")
     assert agent.history == [user_input, expected_response], "Expected both input and response to be in history"
+
+def test_request_handles_exception(mock_llm_chain):
+
+    exception_message = 'Test exception'
+    mock_llm_chain_instance = mock_llm_chain[1]
+    mock_llm_chain_instance.invoke.side_effect = Exception(exception_message)
+
+    agent = LlamaAgent(MODEL, PROMPT)
+
+    with pytest.raises(Exception) as exc_info:
+        agent.request('hello')
+
+    assert str(exc_info.value) == exception_message
