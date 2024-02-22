@@ -5,6 +5,7 @@ and creates the required amount of ai agents to do the job.
 from langchain.prompts import PromptTemplate
 from ai_agent import LlamaAgent
 from config import MAXCONVOS
+# pylint: disable=too-few-public-methods
 
 class LlamaHerder:
     """ The class that can herd our llama ai agents """

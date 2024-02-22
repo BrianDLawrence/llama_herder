@@ -33,7 +33,6 @@ def test_request_with_mocked_dependencies(mock_llm_chain):
     agent = LlamaAgent(MODEL, PROMPT)
     response = agent.request(user_input)
 
-    # Assert
     assert response == expected_response
     mock_llm_chain_instance.invoke.assert_called_once_with(f"{user_input}")
     assert agent.history == [user_input, expected_response], "Expected both input and response to be in history"
