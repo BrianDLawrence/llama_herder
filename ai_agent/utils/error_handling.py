@@ -9,5 +9,4 @@ def error_handler(operation_description):
         yield
     except Exception as e:
         logger.exception("Error occurred during %s with exception: %s",operation_description,e)
-        # For now I will  re-raise the exception
         raise
