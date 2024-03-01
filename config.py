@@ -9,6 +9,7 @@ load_dotenv()
 #Ollama Model for our Llama Agents
 MATH = "wizard-math"
 GENERAL = "llama2"
+GEMMA = "gemma"
 TINY = "tinyllama"
 
 #max number of conversations allowed
