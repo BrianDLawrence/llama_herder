@@ -34,3 +34,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest ai_agent --cov=ai_agent
+        pytest longterm_memory --cov=longterm_memory

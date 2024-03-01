@@ -23,7 +23,8 @@ class Agent:
 
     def __create_chain_from_template(self,template):
         prompt = ChatPromptTemplate.from_template(template)
-        return prompt | self.llm | StrOutputParser()
+        chain = prompt | self.llm | StrOutputParser()
+        return chain
 
     def __create_request_with_history(self,request):
         return {"request":request, "history":self.get_history_as_string()}

@@ -2,12 +2,12 @@
     For this test to run, it requires
     a local Ollama LLM service 
 """
-from config import GENERAL
-from ai_agent import LlamaAgent
+from config import GENERAL, GEMMA
+from ai_agent import LlamaAgent, Agent
 from .test_data import TESTPROMPT
 
 def test_llama_is_able_to_be_invoked():
-    ollama = LlamaAgent(GENERAL,TESTPROMPT)
+    ollama = LlamaAgent(GEMMA,TESTPROMPT)
     prompt = """This is a pytest, I am checking to see if you are running.
     If you are running, please respond with a single 'I AM WORKING' and nothing else"""
     response = ollama.request(prompt)
@@ -22,3 +22,11 @@ def test_llama_remembers_our_chats():
     prompt2 = "Please tell me the dog's name."
     response = ollama.request(prompt2)
     assert dogsname in response
+
+def test_agent_is_working():
+    agent = Agent(GENERAL)
+    prompt = """This is a pytest, I am checking to see if you are running.
+    If you are running, please respond with a single 'I AM WORKING' and nothing else"""
+    response = agent.make_request(prompt)
+    print(response)
+    assert "I AM WORKING" in response
