@@ -4,7 +4,8 @@ AI Agent Controller<br>
 Using [Langchain](https://www.langchain.com/) with local LLMs from [ollama.ai](https://ollama.ai/)<br>
 
 ## High Level Architecture Diagram
-![Llama Design](LlamaHerder.png)
+![Llama Herder Design](llama_herder.png)
+![Llama System Design](LlamaSystem.png)
 
 ## EXAMPLES
 
