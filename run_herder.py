@@ -28,10 +28,12 @@ def callback(ch, method, properties, body):
     response = singleagent.request(body.decode("utf-8"))
     print(response)
 
-channel.basic_consume(queue='hub', on_message_callback=callback, auto_ack=True)
 
-print('Started Consuming')
+if __name__ == "__main__":
+    channel.basic_consume(queue='hub', on_message_callback=callback, auto_ack=True)
 
-channel.start_consuming()
+    print('Started Consuming')
 
-channel.close()
+    channel.start_consuming()
+
+    channel.close()
