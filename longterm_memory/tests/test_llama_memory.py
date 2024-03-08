@@ -5,6 +5,13 @@ def test_initialize_the_memory():
     memory = LlamaMemory()
     assert isinstance(memory,LlamaMemory)
 
+@patch('longterm_memory.llama_memory.chromadb.PersistentClient')
+def test_initialize_the_memory_with_persistent_directory(mock_persistentclient):
+    pesistent_dir = "test_directory"
+    memory = LlamaMemory(pesistent_dir)
+    assert isinstance(memory,LlamaMemory)
+    mock_persistentclient.assert_called_once_with(path=pesistent_dir)
+
 @patch('longterm_memory.llama_memory.LLamaEmbeddings')
 @patch('longterm_memory.llama_memory.chromadb.PersistentClient')
 def test_remember_string(mock_persistentclient, mock_ollamaembeddings):

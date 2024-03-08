@@ -4,6 +4,7 @@
 """
 from config import GENERAL, GEMMA
 from ai_agent import LlamaAgent, Agent
+from longterm_memory import LlamaMemory
 from .test_data import TESTPROMPT
 
 def test_llama_is_able_to_be_invoked():
@@ -30,3 +31,38 @@ def test_agent_is_working():
     response = agent.make_request(prompt)
     print(response)
     assert "I AM WORKING" in response
+
+def test_agent_remembers_our_chats():
+    dogsname = "Chuck"
+    ollama = Agent(GENERAL)
+    prompt = """This is a pytest, I am checking to see if you are running and working correctly.
+      I want you to remember this: The dog's name is """+dogsname
+    ollama.make_request(prompt)
+    prompt2 = "Please tell me the dog's name."
+    response = ollama.make_request(prompt2)
+    assert dogsname in response
+
+def test_agent_is_working_with_memory():
+    string_to_remember = "Brian's cat is named Arturo"
+    memory = LlamaMemory()
+    memory.remember_string(string_to_remember)
+    agent = Agent(GENERAL,memory)
+    prompt = """This is a pytest, I am checking to see if you are running and have memory.
+    The chat history will be empty. You should find context however.
+    Please tell me what Brian's cat's name is"""
+    response = agent.make_request(prompt)
+    print(response)
+    assert "Arturo" in response
+
+def test_agent_is_working_with_memory_and_history():
+    string_to_remember = "Brian's cat is named Arturo"
+    memory = LlamaMemory()
+    memory.remember_string(string_to_remember)
+    agent = Agent(GENERAL,memory)
+    prompt = """Please remember that Brian has a green car."""
+    agent.make_request(prompt)
+    prompt2 = """Please tell me the name of Brian's cats from context and the color of his car from the history"""
+    response = agent.make_request(prompt2)
+    print(f"Response: {response}")
+    assert "Arturo" in response
+    assert "green" in response
