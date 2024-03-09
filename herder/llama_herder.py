@@ -3,7 +3,7 @@ This is the program that takes the Goal, the Context,
 and creates the required amount of ai agents to do the job. 
 """
 from langchain.prompts import PromptTemplate
-from ai_agent import LlamaAgent
+from ai_agent import Agent
 from config import MAXCONVOS
 # pylint: disable=too-few-public-methods
 
@@ -31,16 +31,16 @@ class LlamaHerder:
         """+__SAFEWORD+" : {topic} ")
 
     def __init__(self, user,helper):
-        self.__user = LlamaAgent(user,LlamaHerder.__USERPROMPT)
-        self.__helper = LlamaAgent(helper,LlamaHerder.__HELPERPROMPT)
+        self.__user = Agent(user)
+        self.__helper = Agent(helper)
 
     def herder(self, goal, context):
         """ the main herding function """
-        userdialog = self.__user.request(" GOAL: "+goal+" CONTEXT: "+context)
+        userdialog = self.__user.make_request(" GOAL: "+goal+" CONTEXT: "+context)
 
         for _ in range(MAXCONVOS):
-            helperdialog = self.__helper.request(userdialog)
-            userdialog = self.__user.request(helperdialog)
+            helperdialog = self.__helper.make_request(userdialog)
+            userdialog = self.__user.make_request(helperdialog)
             if LlamaHerder.__GOALWORD in userdialog:
                 break
             if LlamaHerder.__SAFEWORD in helperdialog:

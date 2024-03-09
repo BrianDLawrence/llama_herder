@@ -4,8 +4,8 @@ This is a work in progress and not CLEAN at all
 But it will be :) 
 """
 import pika
-from ai_agent import LlamaAgent
-from config import CLOUDAMQP_URL, GENERAL, GENERALPROMPT
+from ai_agent import Agent
+from config import CLOUDAMQP_URL, GENERAL
 
 params = pika.URLParameters(CLOUDAMQP_URL)
 
@@ -24,8 +24,8 @@ def callback(ch, method, properties, body):
     """
     print('Received in hub')
     print(body)
-    singleagent = LlamaAgent(GENERAL,GENERALPROMPT)
-    response = singleagent.request(body.decode("utf-8"))
+    singleagent = Agent(GENERAL)
+    response = singleagent.make_request(body.decode("utf-8"))
     print(response)
 
 
