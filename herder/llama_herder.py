@@ -2,7 +2,6 @@
 This is the program that takes the Goal, the Context,
 and creates the required amount of ai agents to do the job. 
 """
-from langchain.prompts import PromptTemplate
 from ai_agent import Agent
 from config import MAXCONVOS
 # pylint: disable=too-few-public-methods
@@ -13,36 +12,36 @@ class LlamaHerder:
     __SAFEWORD = "I CAN'T HELP"
     __GOALWORD = "THE GOAL IS COMPLETE!"
 
-    __USERPROMPT = PromptTemplate(
-        input_variables=["topic"],
-        template ="""
+    __USERPROMPT = """
         You are the user, you will be given a goal and must ask the right questions 
         to determine if you goal has been achieved.
         If your goal has been achieved, please make sure to say the following
         in all caps: 
-        """+__GOALWORD+" : {topic} ")
+        """+__GOALWORD+" Your Chat History is: {history} The request is: {request}"
 
-    __HELPERPROMPT = PromptTemplate(
-        input_variables=["topic"],
-        template="""
+    __HELPERPROMPT = """
         You are an all purpose helper. You will answer questions to the best of your ability
         with the goal of helping the user. If you can't help anymore, please say the following
         in all caps: 
-        """+__SAFEWORD+" : {topic} ")
+        """+__SAFEWORD+" Your Chat History is: {history} The request is: {request}"
 
     def __init__(self, user,helper):
-        self.__user = Agent(user)
-        self.__helper = Agent(helper)
+        self.user = Agent(user)
+        self.helper = Agent(helper)
 
-    def herder(self, goal, context):
+    def herd(self, goal, context):
         """ the main herding function """
-        userdialog = self.__user.make_request(" GOAL: "+goal+" CONTEXT: "+context)
+        userdialog = self.user.make_request_with_template(" The goal is: "+goal+" CONTEXT: "+context,self.__USERPROMPT)
+        print(f"Initial User Agent Response: {userdialog}")
 
-        for _ in range(MAXCONVOS):
-            helperdialog = self.__helper.make_request(userdialog)
-            userdialog = self.__user.make_request(helperdialog)
+        for i in range(MAXCONVOS):
+            print(f"Loop: {i+1}")
+            helperdialog = self.helper.make_request_with_template(userdialog,self.__HELPERPROMPT)
+            print(f"Helper Response: {helperdialog}")
             if LlamaHerder.__GOALWORD in userdialog:
                 break
+            userdialog = self.user.make_request_with_template(helperdialog, self.__USERPROMPT)
+            print(f"User Response: {userdialog}")
             if LlamaHerder.__SAFEWORD in helperdialog:
                 break
 
