@@ -7,7 +7,7 @@ def test_herder_initialization():
     herder = LlamaHerder(GENERAL,GENERAL)
     assert isinstance(herder,LlamaHerder)
 
-def disabled_test_herder_scenerio_one():
+def test_herder_scenerio_one():
     herder = LlamaHerder(GENERAL,GENERAL)
     response = herder.herd(MOCKGOAL1,f"CALENDAR:{MOCKCALENDARDATA1} TODO:{MOCKTODOLIST1} ")
     print(response)

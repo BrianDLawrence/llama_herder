@@ -38,11 +38,11 @@ class LlamaHerder:
             print(f"Loop: {i+1}")
             helperdialog = self.helper.make_request_with_template(userdialog,self.__HELPERPROMPT)
             print(f"Helper Response: {helperdialog}")
-            if LlamaHerder.__GOALWORD in userdialog:
+            if LlamaHerder.__SAFEWORD in helperdialog:
                 break
             userdialog = self.user.make_request_with_template(helperdialog, self.__USERPROMPT)
             print(f"User Response: {userdialog}")
-            if LlamaHerder.__SAFEWORD in helperdialog:
+            if LlamaHerder.__GOALWORD in userdialog:
                 break
 
         return userdialog

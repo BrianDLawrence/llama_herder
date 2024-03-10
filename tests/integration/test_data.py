@@ -115,8 +115,7 @@ MOCKGOAL1 = """
     to determine when it should be complete based on priority P1 being the highest with P2,3 .etc being lower
     Also look at the description and determine based on the description if the TODO should be done before 
     a meeting based on the context. 
-    The schedule should be in the following format exactly:
-    [ITEM1 NAME, DATE, START TIME, END TIME, DESCRIPTION], [ITEM2 NAME...]
+    The schedule should be return in JSON format. 
 """
 
 TESTPROMPT = PromptTemplate(
