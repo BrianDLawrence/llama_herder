@@ -13,15 +13,17 @@ class LlamaHerder:
     __GOALWORD = "THE GOAL IS COMPLETE!"
 
     __USERPROMPT = """
-        You are the user, you will be given a goal and must ask the right questions 
-        to determine if you goal has been achieved.
-        If your goal has been achieved, please make sure to say the following
-        in all caps: 
-        """+__GOALWORD+" Your Chat History is: {history} The request is: {request}"
+        You are the user, you will be given a goal with context.
+        The goal and context are: {request} 
+        DO NOT try to solve the problem or achieve the goal. 
+        Your job is to review the solution provided to you and determine 
+        if the goal is achieved. Please respond by saying the following in 
+        all caps if the goal has been achieved:
+        """+__GOALWORD+ " Your Chat History is: {history} "
 
     __HELPERPROMPT = """
-        You are an all purpose helper. You will answer questions to the best of your ability
-        with the goal of helping the user. If you can't help anymore, please say the following
+        You are an all purpose helper. You will try to achieve the goal to the best of your ability.
+        If you can't help or achieve this goal, please say the following
         in all caps: 
         """+__SAFEWORD+" Your Chat History is: {history} The request is: {request}"
 
@@ -33,16 +35,18 @@ class LlamaHerder:
         """ the main herding function """
         userdialog = self.user.make_request_with_template(" The goal is: "+goal+" CONTEXT: "+context,self.__USERPROMPT)
         print(f"Initial User Agent Response: {userdialog}")
+        helperdialog = self.helper.make_request_with_template("The goal is: "+goal+" CONTEXT: ",self.__HELPERPROMPT)
+        print(f"Initial Helper Agent Response: {helperdialog}")
 
         for i in range(MAXCONVOS):
             print(f"Loop: {i+1}")
-            helperdialog = self.helper.make_request_with_template(userdialog,self.__HELPERPROMPT)
-            print(f"Helper Response: {helperdialog}")
-            if LlamaHerder.__SAFEWORD in helperdialog:
-                break
             userdialog = self.user.make_request_with_template(helperdialog, self.__USERPROMPT)
             print(f"User Response: {userdialog}")
             if LlamaHerder.__GOALWORD in userdialog:
+                break
+            helperdialog = self.helper.make_request_with_template(userdialog,self.__HELPERPROMPT)
+            print(f"Helper Response: {helperdialog}")
+            if LlamaHerder.__SAFEWORD in helperdialog:
                 break
 
         return userdialog

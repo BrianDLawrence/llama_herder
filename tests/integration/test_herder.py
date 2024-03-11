@@ -1,4 +1,4 @@
-from config import GENERAL
+from config import GENERAL,MISTRAL
 from herder import LlamaHerder
 from .test_data import MOCKCALENDARDATA1,MOCKTODOLIST1,MOCKGOAL1
 
@@ -8,6 +8,6 @@ def test_herder_initialization():
     assert isinstance(herder,LlamaHerder)
 
 def test_herder_scenerio_one():
-    herder = LlamaHerder(GENERAL,GENERAL)
+    herder = LlamaHerder(GENERAL,MISTRAL)
     response = herder.herd(MOCKGOAL1,f"CALENDAR:{MOCKCALENDARDATA1} TODO:{MOCKTODOLIST1} ")
     print(response)

@@ -11,6 +11,7 @@ MATH = "wizard-math"
 GENERAL = "llama2"
 GEMMA = "gemma:2b"
 TINY = "tinyllama"
+MISTRAL = "mistral:instruct"
 
 #max number of conversations allowed
 MAXCONVOS = 2
