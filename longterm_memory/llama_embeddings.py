@@ -2,9 +2,9 @@
     https://docs.trychroma.com/migration#migration-to-0416---november-7-2023
 """
 # pylint: disable=redefined-builtin
-from langchain_community import embeddings
+from langchain_community.embeddings import ollama
 
-class LLamaEmbeddings(embeddings.ollama.OllamaEmbeddings):
+class LLamaEmbeddings(ollama.OllamaEmbeddings):
     def __init__(self, model, *args, **kwargs):
         super().__init__(model=model, *args, **kwargs)
 
