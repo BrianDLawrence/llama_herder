@@ -5,33 +5,34 @@ name: Llama Herder
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint pytest pytest-cov pytest-mock langchain langchain-community tiktoken chromadb
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Lint with pylint
-      run: |
-        pylint $(git ls-files '*.py')
-    - name: Test with pytest
-      run: |
-        pytest ai_agent --cov=ai_agent
-        pytest longterm_memory --cov=longterm_memory
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint pytest pytest-cov pytest-mock langchain langchain-community tiktoken chromadb
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint with pylint
+        run: |
+          pylint $(git ls-files '*.py')
+      - name: Test with pytest
+        run: |
+          pytest ai_agent --cov=ai_agent
+          pytest longterm_memory --cov=longterm_memory
+          pytest message_handler --cov message_handler
+          pytest herder --cov herder
