@@ -32,21 +32,32 @@ class LlamaHerder:
         self.helper = Agent(helper)
 
     def herd(self, goal, context):
-        """ the main herding function """
+        helperdialog = self.initiate_conversation(goal, context)
+        return self.have_conversation_loop(helperdialog)
+
+    def initiate_conversation(self, goal, context):
         userdialog = self.user.make_request_with_template(" The goal is: "+goal+" CONTEXT: "+context,self.__USERPROMPT)
         print(f"Initial User Agent Response: {userdialog}")
         helperdialog = self.helper.make_request_with_template("The goal is: "+goal+" CONTEXT: ",self.__HELPERPROMPT)
         print(f"Initial Helper Agent Response: {helperdialog}")
+        return helperdialog
 
+
+    def have_conversation_loop(self, helperdialog):
         for i in range(MAXCONVOS):
             print(f"Loop: {i+1}")
+
             userdialog = self.user.make_request_with_template(helperdialog, self.__USERPROMPT)
             print(f"User Response: {userdialog}")
             if LlamaHerder.__GOALWORD in userdialog:
                 break
+
             helperdialog = self.helper.make_request_with_template(userdialog,self.__HELPERPROMPT)
             print(f"Helper Response: {helperdialog}")
             if LlamaHerder.__SAFEWORD in helperdialog:
+                userdialog = f"GOAL NOT ACHIEVED: userdialog={userdialog} helperdialog={helperdialog}"
                 break
 
+            if i == MAXCONVOS-1:
+                userdialog = f"GOAL NOT ACHIEVED MAXATTEMPS: userdialog={userdialog} helperdialog={helperdialog}"
         return userdialog
