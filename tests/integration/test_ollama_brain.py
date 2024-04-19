@@ -43,7 +43,7 @@ def test_agent_is_working_with_memory_and_history():
     agent = Agent(GENERAL,memory)
     prompt = """Please remember that Brian has a green car."""
     agent.make_request(prompt)
-    prompt2 = """Please tell me the name of Brian's cats from context and the color of his car from the history"""
+    prompt2 = """Please tell me the name of Brian's cat from context and the color of Brian's car from the history"""
     response = agent.make_request(prompt2)
     print(f"Response: {response}")
     assert "Arturo" in response
