@@ -36,3 +36,4 @@ jobs:
           pytest longterm_memory --cov=longterm_memory
           pytest message_handler --cov message_handler
           pytest herder --cov herder
+          pytest rag_handler --cov rag_handler
