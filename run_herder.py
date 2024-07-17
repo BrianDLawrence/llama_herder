@@ -5,7 +5,9 @@ But it will be :)
 """
 import multiprocessing
 from message_handler import Handler
+from rag_handler import Handler as RagHandler
 from ai_agent import Agent
+from longterm_memory import LlamaMemory
 from config import CLOUDAMQP_URL, GENERAL
 
 def start_listeners():
@@ -26,10 +28,27 @@ def callback(ch, method, properties, body):
     """
     print('Received in hub')
     print(body)
-    singleagent = Agent(GENERAL)
-    response = singleagent.make_request(body.decode("utf-8"))
-    print(response)
 
+    rag_hanlder = RagHandler("http://localhost:5174",10)
+
+    urls = rag_hanlder.parse_urls(body.decode("utf-8"))
+    if len(urls) > 0:
+        print("Calling with the following URL(s)")
+        print(urls)
+        rag_data = rag_hanlder.process_urls(urls)
+        print(rag_data)
+        call_agent_with_memory(body,str(rag_data))
+    else:
+        agent = Agent(GENERAL)
+        response = agent.make_request(body.decode("utf-8"))
+        print(response)
+
+def call_agent_with_memory(body:str,string_to_remember:str):
+    memory = LlamaMemory()
+    memory.remember_string(string_to_remember)
+    agent = Agent(GENERAL,memory)
+    response = agent.make_request(body.decode("utf-8"))
+    print(response)
 
 if __name__ == "__main__":
     start_listeners()
