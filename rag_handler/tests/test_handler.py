@@ -27,3 +27,21 @@ class TestHandler(unittest.TestCase):
 
         mock_post.assert_called_once_with(f"{self.test_rag_service_url}/process-urls", json=[test_url],timeout=10)
         self.assertEqual(result, [expected_response])
+
+    def test_parse_urls_single_url(self):
+        test_input = "This is a test input for a url https://test.com OK?"
+        expected_output = ["https://test.com"]
+
+        self.assertEqual(self.handler.parse_urls(test_input),expected_output)
+
+    def test_parse_urls_two_url(self):
+        test_input = "This is a test input for a url https://test.com OK, and https://test2.com"
+        expected_output = ["https://test.com","https://test2.com"]
+
+        self.assertEqual(self.handler.parse_urls(test_input),expected_output)
+
+    def test_parse_urls_no_url(self):
+        test_input = "This is a test input for no urls"
+        expected_output = []
+
+        self.assertEqual(self.handler.parse_urls(test_input),expected_output)
