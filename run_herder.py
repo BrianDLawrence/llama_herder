@@ -36,7 +36,7 @@ def callback(ch, method, properties, body):
         print("Calling with the following URL(s)")
         print(urls)
         rag_data = rag_hanlder.process_urls(urls)
-        print(rag_data)
+        #print(rag_data)
         call_agent_with_memory(body,str(rag_data))
     else:
         agent = Agent(GENERAL)
